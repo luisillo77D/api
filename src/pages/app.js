@@ -9,15 +9,23 @@ const App = () => {
   const [selectedCategory, setSelectedCategory] = useState('');
 
   useEffect(() => {
-    getWeapons().then((data) => setWeapons(data));
+    //OBTENER LAS ARMAS DE LA API CON LA FUNCIÓN getWeapons Y ASYNC/AWAIT
+    const fetchWeapons = async () => {
+      const weapons = await getWeapons();
+      setWeapons(weapons);
+    };
+    fetchWeapons();
   }, []);
-
+  
   // Filtrar las armas según la categoría seleccionada
   const filteredWeapons = selectedCategory
     ? weapons.filter((weapon) => 
         weapon.category.includes(selectedCategory)
       )
     : weapons;
+
+    console.log("armas:" + weapons.map((weapon) => weapon.displayName));
+    console.log("filtradas:" + filteredWeapons.map((weapon) => weapon.displayName));
 
   return (
     <div>
